@@ -2,6 +2,9 @@ import PageWrapper from "@/app/dashboard/_components/PageWrapper";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import ContentHandler from "./__components/ContentHandler";
+import EditButtonHandler from "./__components/EditButtonHandler";
+import DeleteHandler from "./__components/DeleteHandler";
 
 type Props = {
      params: Promise<{ envid: string }>
@@ -24,7 +27,7 @@ buttons -> download, copy, edit , envfileName edit , delete
 --------------------------------------*/
 export default async function page({ params }: Props) {
      const { envid } = await params;
-
+     let content: string = "Lorem ipsum dolor, sit amet  "
      return (
           <PageWrapper >
 
@@ -36,21 +39,13 @@ export default async function page({ params }: Props) {
                          <Button variant={'outline'}>Download</Button>
                          <Button variant={'outline'}>Copy</Button>
                          <Separator orientation="vertical" />
-                         <Button variant={'secondary'}>Edit</Button>
-                         <Button variant={"destructive"}>Delete</Button>
+                         <EditButtonHandler envid={envid}/>
+                         <DeleteHandler envid={envid}/>
+
                     </div>
                </header>
-               <Textarea  value={"Some text"} />
-               <div className=" border px-3 py-2 mt-8 font-dm_mono text-lg  border-black/40 pb-16  border-dashed ">
-                
-                         JWT_SECRET = "hjdklsdfkjl"
-                         <br />
-                         JWT_SECRET = "hjdklsdfkjl"
-                         <br />
-                         JWT_SECRET = "hjdklsdfkjl"
-                    
-               </div>
 
+               <ContentHandler envid={envid} content={content} />
           </PageWrapper>
      )
 }
