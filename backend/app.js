@@ -18,9 +18,13 @@ app.use(cookieParser());
 // Routes
 import healthRoute from "./routes/health.route.js";
 import authRoute from "./routes/auth.route.js";
+import projectRoute from "./routes/project.route.js";
+import EnvFileRoute from "./routes/env.route.js";
 
 app.use("/api/v1", healthRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/project", projectRoute);
+app.use("/api/v1/project", EnvFileRoute);
 
 // Default
 app.get("/", (req, res) => {
