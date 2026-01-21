@@ -9,6 +9,7 @@ type Props = {
 export default async function page({ params }: Props) {
      const { projectid } = await params;
      
+     
      return (
           <PageWrapper heading={"Project - " + projectid} >
                <div className="  font-medium top-2 right-5 text-sm">

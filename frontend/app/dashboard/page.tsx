@@ -3,10 +3,13 @@ import { Project_card_item } from '@/lib/types/types'
 import PageWrapper from './_components/PageWrapper'
 
 import ProjectCard from './_components/ProjectCard'
+import { getProjects } from '@/lib/api/project_env'
 
 type Props = {}
 
-export default function page({ }: Props) {
+export default async function page({ }: Props) {
+  const data = await getProjects()
+  console.log(data);
   return (
     <PageWrapper heading={"All projects"} >
 

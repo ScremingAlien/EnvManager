@@ -1,28 +1,24 @@
- 
-// import LoginForm from './_components/LoginForm'
-import { getTodos } from '@/lib/api/todos';
+import LoginForm from './_components/LoginForm';
+import SignupForm from './_components/SignupForm';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-type Props = {}
-
-export default async function page({ }: Props) {
-  const todos = await getTodos();
-
+export default function Page() {
   return (
-    <div>
- 
-      <ul className="space-y-2">
-        {todos.slice(0, 10).map(todo => (
-          <li
-            key={todo.id}
-            className="border p-3 rounded flex justify-between"
-          >
-            <span>{todo.title}</span>
-            <span>{todo.completed ? '✅' : '❌'}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="flex justify-center items-center h-screen">
+      <Tabs defaultValue="login" className="w-[400px]">
+        <TabsList className="grid grid-cols-2">
+          <TabsTrigger value="login">Login</TabsTrigger>
+          <TabsTrigger value="signup">Register</TabsTrigger>
+        </TabsList>
 
+        <TabsContent value="login">
+          <LoginForm />
+        </TabsContent>
 
+        <TabsContent value="signup">
+          <SignupForm />
+        </TabsContent>
+      </Tabs>
     </div>
-  )
+  );
 }
