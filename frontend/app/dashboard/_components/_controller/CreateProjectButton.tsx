@@ -36,12 +36,12 @@ export default function CreateProjectButton({ }: Props) {
 
 
                if (!res?.success) {
-                    throw new Error(res?.message || 'Login failed');
+                    throw new Error(res?.message || ' Something went wrong');
                } else {
                     refreshApi('projects');
                }
                
-               toast.success(res.message ?? 'Login successful');
+               toast.success(res.message ?? ' Project created successfully');
  
 
           } catch (err: any) {
