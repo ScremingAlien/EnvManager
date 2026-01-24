@@ -1,4 +1,4 @@
-import { ApiResponse, EnvFileType, LoginRes, ProjectType } from "../types/types";
+import { ApiResponse, BaseResponse, EnvFileType,   ProjectType } from "../types/types";
 import { apiFetch } from "./fetcher";
 
 export function getMe() {
@@ -12,6 +12,21 @@ export function getMe() {
      }
 
 }
+export function getEnvById({ projectId, envId }: { envId: string, projectId: string }) {
+     return apiFetch<BaseResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
+          method:"GET",
+          token: true,
+          tags: [`env-${projectId}-${envId}`]
+     });
+}
+export function deleteEnvById({ projectId, envId }: { envId: string, projectId: string }) {
+     return apiFetch<ApiResponse<EnvFileType, "envFile">>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
+          method:"DELETE",
+          token: true,
+          tags: [`env-${projectId}-${envId}`]
+     });
+}
+
 
 export function getEnv({ id }: { id: string }) {
      return apiFetch<ApiResponse<EnvFileType[], "envFiles">>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${id}/env-files`, {

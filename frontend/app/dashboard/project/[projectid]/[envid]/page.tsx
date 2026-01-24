@@ -39,7 +39,7 @@ export default async function page({ params }: Props) {
                          <Button variant={'outline'}>Copy</Button>
                          <Separator orientation="vertical" />
                          <EditButtonHandler envid={envid}/>
-                         <DeleteHandler envid={envid}/>
+                         <DeleteHandler envid={envid} type="BUTTON"/>
 
                     </div>
                </header>
