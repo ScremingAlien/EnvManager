@@ -1,4 +1,4 @@
-import { ApiResponse, BaseResponse, EnvFileType,   ProjectType } from "../types/types";
+import { ApiResponse, BaseResponse, EnvFileType, ProjectType } from "../types/types";
 import { apiFetch } from "./fetcher";
 
 export function getMe() {
@@ -13,17 +13,23 @@ export function getMe() {
 
 }
 export function getEnvById({ projectId, envId }: { envId: string, projectId: string }) {
-     return apiFetch<BaseResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
-          method:"GET",
+     return apiFetch<ApiResponse<EnvFileType, "envFile">>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
+          method: "GET",
           token: true,
           tags: [`env-${projectId}-${envId}`]
      });
 }
+export function patchEnvById({ projectId, envId, content }: { envId: string, projectId: string, content: string }) {
+     return apiFetch<ApiResponse<EnvFileType, "envFile">>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
+          method: "PATCH",
+          token: true,
+          body:{ content },
+     });
+}
 export function deleteEnvById({ projectId, envId }: { envId: string, projectId: string }) {
      return apiFetch<ApiResponse<EnvFileType, "envFile">>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${projectId}/env-files/${envId}`, {
-          method:"DELETE",
+          method: "DELETE",
           token: true,
-          tags: [`env-${projectId}-${envId}`]
      });
 }
 

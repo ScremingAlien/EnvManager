@@ -1,15 +1,17 @@
 "use client"
 import { Textarea } from '@/components/ui/textarea'
+import { patchEnvById } from '@/lib/api/project_env';
 import { useEnvStore } from '@/lib/zustand/envStore';
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 
 type Props = {
      envid: string,
-     content: string
+     content: string,
+     projectId: string
 }
 
-export default function ContentHandler({ envid, content }: Props) {
+export default function ContentHandler({ envid, content, projectId }: Props) {
      const isEdit = useEnvStore((state) => state.isEdit)
      const [value, setValue] = useState<string>(content || '');
      const [isSaving, setIsSaving] = useState<Boolean>(false);
@@ -22,9 +24,13 @@ export default function ContentHandler({ envid, content }: Props) {
           try {
                // Replace this with your actual API call or Zustand action
                // await axios.patch(`/api/env/${envid}`, { content: newValue });
-               console.log("Autosaving to DB:", newValue);
-
-               toast.success("Changes saved", { duration: 1000 });
+               let res = await patchEnvById({ envId: envid, content: newValue, projectId: projectId });
+               if (res.success) {
+                    toast.success("Changes saved");
+               }
+               else {
+                    throw new Error(res.message)
+               }
           } catch (error) {
                toast.error("Failed to autosave");
           } finally {
@@ -39,7 +45,7 @@ export default function ContentHandler({ envid, content }: Props) {
 
           const delayDebounceFn = setTimeout(() => {
                saveToDb(value);
-          }, 800);  
+          }, 800);
 
           return () => clearTimeout(delayDebounceFn);
      }, [value, saveToDb, content]);

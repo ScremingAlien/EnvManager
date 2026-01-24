@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ContextMenuItem } from "@/components/ui/context-menu"
 import { useDeleteDialog } from "@/lib/zustand/useDeleteDialog"
 import { TrashIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 type Props = {
      envid: string,
@@ -12,8 +13,7 @@ type Props = {
 }
 
 export default function DeleteHandler({ envid, type ,projectId}: Props) {
-
-
+     const router = useRouter()     
      return (
           type == "BUTTON" ?
                <Button variant={'destructive'}
@@ -23,6 +23,7 @@ export default function DeleteHandler({ envid, type ,projectId}: Props) {
                               projectId: projectId,
                               type: "ENV",
                          })
+                         router.back()
                     }}
                >Delete</Button>
                :
