@@ -8,10 +8,24 @@ const projectSchema = new Schema(
       trim: true,
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+    sharedWith: [
+      {
+        userId: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        role: {
+          type: String,
+          enum: ["editor", "viewer"],
+          default: "viewer",
+        },
+      },
+    ],
   },
   { timestamps: true },
 );
